@@ -1,0 +1,15 @@
+use('airline_group_22');
+
+db.employees.aggregate(
+    // Unwind employment_record embedded document
+   {$unwind:"$employment_record"},
+   {
+       $group : {
+        // Group by job
+       _id:"$employment_record.position",
+       // Calculate average salary
+       avg_salary:{$avg:"$employment_record.salary"}
+    }},
+    // Sort by descending average salary
+    {$sort:{avg_salary:-1}}
+)

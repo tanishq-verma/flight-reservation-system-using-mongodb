@@ -1,0 +1,72 @@
+use('airline_group_22');
+
+db.flights.aggregate([
+{
+    // Join bookings to get total number of booked seats
+    $lookup:
+                {
+                    from:"bookings",
+                    localField:"_id",
+                    foreignField:"journey",
+                    as:"flight_bookings"
+                }
+},
+{
+    // Join planes to get total number of seats in the plane
+    $lookup:
+                {
+                    from: "planes", 
+                    localField: "plane_id",
+                    foreignField: "_id",
+                    as: "plane_specs"
+                }
+},
+{
+    // Join airports to get departure airport name
+    $lookup:
+                {
+                    from: "airports", 
+                    localField: "departure_airport",
+                    foreignField: "_id",
+                    as: "departure"
+                }
+},
+{
+    // Join airports to get arrival airport name
+    $lookup:
+                {
+                    from: "airports", 
+                    localField: "arrival_airport",
+                    foreignField: "_id",
+                    as: "arrival"
+                }
+},
+{
+    // Join employees to get pilot name
+    $lookup:
+                {
+                    from: "employees", 
+                    localField: "pilot_id",
+                    foreignField: "_id",
+                    as: "pilot"
+                }
+},
+
+ {$unwind: '$plane_specs'},
+ //{$unwind: '$departure'},
+//{$unwind: '$arrival'},
+//{$unwind: '$pilot'},
+{
+    $project:{
+            _id:1,
+            departure: "$departure.name",
+            departure_time: { $dateToString: { format: "%d-%m-%Y %H:%M", date: "$departure_datetime" } },
+            arrival: "$arrival.name",
+            arrival_time: { $dateToString: { format: "%d-%m-%Y %H:%M", date: "$arrival_datetime" } },
+            total_bookings:{$size:"$flight_bookings"},
+            total_seats : "$plane_specs.seating_capacity",
+            available_seats: {$subtract:["$plane_specs.seating_capacity", {$size:"$flight_bookings"}]},
+            pilot: "$pilot.first_name"
+        }
+}
+]).explain()

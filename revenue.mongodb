@@ -1,0 +1,43 @@
+// Select the database to use.
+use('airline_group_22');
+
+var flight_cost = db.flights.aggregate( 
+  {
+    // Join airports to get airport charges
+    $lookup:
+       {from: "airports", 
+        localField: "departure_airport",
+        foreignField: "_id",
+        as: "airport"
+       }
+  }, 
+  // Unwind airport array
+  {$unwind: '$airport'},
+  {$group: {
+          _id: null, 
+          // Add refuel_charge and hourly_rate
+          total: {$sum: { $add: ['$airport.refuel_charge', '$airport.hourly_rate']}}}},
+  {$project: {_id: 0, total:1}}).toArray()[0]["total"]
+
+var salary = db.employees.aggregate(
+    {$group: { 
+        _id: null,
+        salary: {$sum:"$employment_contract.salary"}
+    }},
+    {$project:{salary:{$divide:["$salary", 12]}}}
+).toArray()[0]["salary"] // Convert result to a value
+
+var booking_income = db.bookings.aggregate(
+  {$group: {
+    _id: null, 
+    // Sum total_cost to get total_income
+    income: {$sum: "$total_cost"}}},
+  {$project: {
+    _id:0, 
+    // Multiply income by 100 to model there being more bookings
+    income:{$multiply:["$income", 100]
+  }}}
+).toArray()[0]["income"]
+
+//Calculate revenue
+booking_income - flight_cost - salary

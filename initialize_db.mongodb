@@ -1,0 +1,121 @@
+use('airline_group_22');
+
+//Remove existing collections
+db.bookings.drop();
+db.airports.drop(); 
+db.employees.drop();
+db.flights.drop();
+db.planes.drop();
+
+db.bookings.insertMany([
+{_id:1,booking_datetime:ISODate('2021-03-10T12:31:00.000Z'),fullname:'Amaro, Rolim',journey:[1],passportNo:123415,total_cost:175},
+{_id:2,booking_datetime:ISODate('2021-03-11T13:31:00.000Z'),fullname:'Amiel, Barbara',journey:[2,14],passportNo:123789,total_cost:815},
+{_id:3,booking_datetime:ISODate('2021-03-12T14:31:00.000Z'),fullname:'Amis, Martin',journey:[14],passportNo:156789,total_cost:315},
+{_id:4,booking_datetime:ISODate('2021-03-13T15:31:00.000Z'),fullname:'Amos, Tori',journey:[3],passportNo:168038,total_cost:750},
+{_id:5,booking_datetime:ISODate('2021-03-14T16:31:00.000Z'),fullname:'Andersen, Hans Christian',journey:[4],passportNo:184725,total_cost:350},
+{_id:6,booking_datetime:ISODate('2021-03-15T17:31:00.000Z'),fullname:'Anderson, Beth',journey:[5],passportNo:201412,total_cost:185},
+{_id:7,booking_datetime:ISODate('2021-03-16T18:31:00.000Z'),fullname:'Anderson, Sparky',journey:[6],passportNo:218099,total_cost:360},
+{_id:8,booking_datetime:ISODate('2021-03-17T19:31:00.000Z'),fullname:'Andrians, Aiven',journey:[7],passportNo:234786,total_cost:305},
+{_id:9,booking_datetime:ISODate('2021-03-18T20:31:00.000Z'),fullname:'Andric, Ivo',journey:[8],passportNo:251473,total_cost:450},
+{_id:10,booking_datetime:ISODate('2021-03-19T21:31:00.000Z'),fullname:'Angell, Norman',journey:[9,7],passportNo:268160,total_cost:1220},
+{_id:11,booking_datetime:ISODate('2021-03-20T22:31:00.000Z'),fullname:'Angelou, Maya',journey:[10,4],passportNo:284847,total_cost:1150},
+{_id:12,booking_datetime:ISODate('2021-03-21T23:31:00.000Z'),fullname:'Anne, Stevens',journey:[11],passportNo:null,total_cost:null},
+{_id:13,booking_datetime:ISODate(''),fullname:'Anthony, Piers',journey:null,passportNo:318221,total_cost:400},
+{_id:14,booking_datetime:ISODate('2021-03-23T01:31:00.000Z'),fullname:'Anthony, Susan B.',journey:[13],passportNo:334908,total_cost:375},
+{_id:15,booking_datetime:ISODate('2021-03-24T02:31:00.000Z'),fullname:'Anthony, Albridge',journey:[15],passportNo:351595,total_cost:545}]);
+
+db.airports.insertMany([
+{_id:1,city:'London',country:'UK',hourly_rate:126,name:'Heathrow',refuel_charge:351},
+{_id:2,city:'Birmingham',country:'UK',hourly_rate:101,name:'Birmingham Airport',refuel_charge:259},
+{_id:3,city:'New Delhi',country:'India',hourly_rate:221,name:'IGI New Delhi',refuel_charge:224},
+{_id:4,city:'New York',country:'USA',hourly_rate:156,name:'John F Kennedy International',refuel_charge:362},
+{_id:5,city:'Edinburgh',country:'UK',hourly_rate:135,name:'Edinburgh Airport',refuel_charge:348},
+{_id:6,city:'Glasgow',country:'UK',hourly_rate:109,name:'Glasgow Airport',refuel_charge:386},
+{_id:7,city:'Seattle',country:'USA',hourly_rate:165,name:'Seattle Airport',refuel_charge:201},
+{_id:8,city:'Dallas',country:'USA',hourly_rate:229,name:'Dallas Airport',refuel_charge:349},
+{_id:9,city:'Ibiza',country:'Spain',hourly_rate:115,name:'Ibiza Airport',refuel_charge:313},
+{_id:10,city:'Bordeaux',country:'France',hourly_rate:238,name:'',refuel_charge:385},
+{_id:11,city:'Denver',country:'USA',hourly_rate:0,name:'Denver Airport',refuel_charge:300},
+{_id:12,city:'Mumbai',country:'India',hourly_rate:128,name:'Chatrapati Shivaji International',refuel_charge:267},
+{_id:13,city:'Dubai',country:'UAE',hourly_rate:126,name:'Dubai International',refuel_charge:252},
+{_id:14,city:'Abu Dhabi',country:'UAE',hourly_rate:204,name:'Abu Dhabi International',refuel_charge:242},
+{_id:15,city:'Los Angeles',country:'USA',hourly_rate:197,name:'Los Angeles',refuel_charge:214},
+{_id:16,city:'Sydney',country:'Australia',hourly_rate:100,name:'Sydney Airport',refuel_charge:50},
+{_id:17,city:'Moscow',country:'Russia',hourly_rate:120,name:'Sheremetyevo imeni A. S. Pushkina',refuel_charge:420}]);
+
+db.employees.insertMany([
+{_id:21, address:["448","Kane Place","8198","Mahtowa","USA"], contact:{email:'abas@mail.com', emergency: '126841257', phone:'159246785'}, dob:ISODate('2001-07-26T23:00:00.000Z'), employment_record:{position:'Cabin Crew', start_date:'39877', end_date:'45875', salary:27000}, first_name:'Alexander', gender:'M',health_test:ISODate(''), last_name:'Abasheli'},   
+{_id:22, address:["132","Cooke Court","6661","Elliott","USA"], contact:{email:'daaron@gmail.com', emergency: '102654097', phone:'256951478'}, dob:ISODate('1982-05-22T23:00:00.000Z'), employment_record:{position:'Flight Engineer', start_date:'44018', end_date:'48588', salary:43776}, first_name:'David', gender:'M',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:23, address:["597","Franklin Street","3613","Starks","USA"], contact:{email:'jaaron@hotmail.com', emergency: '2564784', phone:'12569814'}, dob:ISODate('1986-10-13T23:00:00.000Z'), employment_record:{position:'Clerk', start_date:'36851', end_date:'45418', salary:56382}, first_name:'Jane', gender:'F',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:24, address:["813","Story Court","2641","Chemung","USA"], contact:{email:'jonar@googlemail.com', emergency: '18459721', phone:'12890456'}, dob:ISODate('1990-12-03T00:00:00.000Z'), employment_record:{position:'Flight Engineer', start_date:'43693', end_date:'44775', salary:58007}, first_name:'Jonathan', gender:'M',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:25, address:["119","Kermit Place","5905","Onton","USA"], contact:{email:'raar@hotmail.com', emergency: '4578994125', phone:'1206874'}, dob:ISODate('1992-11-21T00:00:00.000Z'), employment_record:{position:'Cabin Crew', start_date:'38110', end_date:'47405', salary:42461}, first_name:'Rachel', gender:'F',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:26, address:["988","Harwood Place","6645","Ironton","USA"], contact:{email:'riarr@googlemail.com', emergency: '45894124', phone:'3069847'}, dob:ISODate('1990-06-20T23:00:00.000Z'), employment_record:{position:'Cabin Crew', start_date:'39797', end_date:'46286', salary:42754}, first_name:'Richard', gender:'M',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:27, address:["597","Covert Street","1509","Harold","USA"], contact:{email:'soarr@msn.com', emergency: '698201487', phone:'2496521'}, dob:ISODate('1994-08-14T23:00:00.000Z'), employment_record:{position:'Clerk', start_date:'40634', end_date:'45296', salary:21063}, first_name:'Soazig', gender:'F',health_test:ISODate(''), last_name:'Aaron'},   
+{_id:28, address:["70","Ferris Street","NE13 4QQ","Ilchester","UK"], contact:{email:'alaar@sky.com', emergency: '306551471', phone:'24621457'}, dob:ISODate('1993-06-05T23:00:00.000Z'), employment_record:{position:'Clerk', start_date:'40457', end_date:'44931', salary:42329}, first_name:'Alexander', gender:'M',health_test:ISODate(''), last_name:'Aaronsohn'},   
+{_id:29, address:["294","Louisa Street","4840","Bowie","USA"], contact:{email:'aarta@sky.com', emergency: '1564894136', phone:'2144587'}, dob:ISODate('1999-04-15T23:00:00.000Z'), employment_record:{position:'Clerk', start_date:'39798', end_date:'44566', salary:58333}, first_name:'Aarudhra', gender:'F',health_test:ISODate(''), last_name:'Tavis'},   
+{_id:30, address:["484","Nixon Court","3858","Century","USA"], contact:{email:'ivaa5@msn.com', emergency: '89758641657', phone:'33512478'}, dob:ISODate('2000-01-28T00:00:00.000Z'), employment_record:{position:'Flight Engineer', start_date:'37003', end_date:'45069', salary:34882}, first_name:'Ivar', gender:'M',health_test:ISODate(''), last_name:'Aasen'},   
+{_id:31, address:["326","Douglas Street","5606","Groton","USA"], contact:{email:'geojr@mail.com', emergency: '1320109865', phone:'16958124'}, dob:ISODate('2003-12-13T00:00:00.000Z'), employment_record:{position:'Flight Engineer', start_date:'37426', end_date:'44915', salary:49046}, first_name:'George', gender:'F',health_test:ISODate(''), last_name:'JR'},   
+{_id:32, address:["689","Essex Street","CY1 3SQ","Sparkill","UK"], contact:{email:'gjoa@mail.com', emergency: '465798045', phone:'162574821'}, dob:ISODate('2000-06-30T23:00:00.000Z'), employment_record:{position:'Cabin Crew', start_date:'35353', end_date:'44881', salary:47742}, first_name:'Gjorgji', gender:'M',health_test:ISODate(''), last_name:'Abadiev'},   
+{_id:33, address:["113","Ellery Street","4878","Cedarville","USA"], contact:{email:'yunaba@hotmail.co.za', emergency: '8407891246', phone:'325698742'}, dob:ISODate('1999-05-02T23:00:00.000Z'), employment_record:{position:'Cabin Crew', start_date:'38508', end_date:'47151', salary:54564}, first_name:'Yunus Nadi', gender:'M',health_test:ISODate(''), last_name:'Abalolu'},   
+{_id:34, address:["941","Stryker Street","2440","Rehrersburg","USA"], contact:{email:'rafba@hotmail.co.uk', emergency: '79800179803', phone:'458951247'}, dob:ISODate('1998-05-28T23:00:00.000Z'), employment_record:{position:'Clerk', start_date:'36175', end_date:'44630', salary:36276}, first_name:'Rafael', gender:'F',health_test:ISODate(''), last_name:'Balos'},   
+{_id:35, address:["77","Brightwater Court","EY4 2AA","Rockhill","UK"], contact:{email:'chab@outlook.com', emergency: '56406146589', phone:'1257485954'}, dob:ISODate('1999-12-26T00:00:00.000Z'), employment_record:{position:'Flight Engineer', start_date:'36063', end_date:'45818', salary:42916}, first_name:'Chris', gender:'M',health_test:ISODate(''), last_name:'Abani'},   
+{_id:1, address:["21","Downing Street","E15 23A","London","UK"], contact:{email:'SamJ98@hotmail.com', emergency: '948757321', phone:'974665274'}, dob:ISODate('1987-01-10T00:00:00.000Z'), employment_record:{position:'First Officer', start_date:'1/21/2010', end_date:'07/21/2028', salary:66000}, first_name:'Sam', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Jones'},   
+{_id:2, address:["243","Boulevard","112213","New York","USA"], contact:{email:'Will_afread3746@gmail.com', emergency: '8563628', phone:'957615421'}, dob:ISODate('1998-05-19T23:00:00.000Z'), employment_record:{position:'Captain', start_date:'36040', end_date:'44811', salary:92000}, first_name:'Will', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Alfred'},   
+{_id:3, address:["979","Beverly Hills","110023","Los Angeles","USA"], contact:{email:'Apaul856@gmail.com', emergency: '498156451', phone:'957365244'}, dob:ISODate('1989-09-10T23:00:00.000Z'), employment_record:{position:'Captain', start_date:'43072', end_date:'04/21/2024', salary:82000}, first_name:'Aaron', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Paul'},   
+{_id:4, address:["02A","High Street","E15 42A","London","UK"], contact:{email:'SS45@outlook.com', emergency: '7894654165', phone:'957465372'}, dob:ISODate('1999-06-30T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'32633', end_date:'45905', salary:95884}, first_name:'Steve', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Smith'},   
+{_id:5, address:["54","Palo Alto","120492","Palo Alto","USA"], contact:{email:'H.james@jp.com', emergency: '8977654547', phone:'973744872'}, dob:ISODate('1987-08-02T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'24691', end_date:'46546', salary:20543}, first_name:'Harry', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'James'},   
+{_id:6, address:["453","Central Street","E12 4NS","London","UK"], contact:{email:'Hr09@outlook.com', emergency: '2653489654', phone:'987625643'}, dob:ISODate('1999-04-06T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'28616', end_date:'46936', salary:56443}, first_name:'Henry', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Robert'},   
+{_id:7, address:["23J","Stratford","E54 53A","London","UK"], contact:{email:'jh@gmail.com', emergency: '897946545', phone:'998483384'}, dob:ISODate('1982-08-05T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'30202', end_date:'47608', salary:87646}, first_name:'Jaden', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Harvey'},   
+{_id:8, address:["98","West Ham","F43 9AF","London","UK"], contact:{email:'JrS23@hotmail.com', emergency: '7897465198', phone:'998483384'}, dob:ISODate('1978-11-09T00:00:00.000Z'), employment_record:{position:'Captain', start_date:'36287', end_date:'44962', salary:86546}, first_name:'Steve', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'JR'},   
+{_id:9, address:["42D","Canary Wharf","BJ4 9AF","London","UK"], contact:{email:'Longbottom11@gmail.com', emergency: '9878946541', phone:'958853743'}, dob:ISODate('1999-07-12T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'28648', end_date:'46146', salary:99982}, first_name:'Kathrine', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Longbottom'},   
+{_id:10, address:["26B","Biggleswades","E20 21A","London","UK"], contact:{email:'Roa45@gmail.com', emergency: '2564415464', phone:'958564334'}, dob:ISODate('1998-12-07T00:00:00.000Z'), employment_record:{position:'First Officer', start_date:'29100', end_date:'45419', salary:102937}, first_name:'Sophia', gender:'F',health_test:ISODate(''), last_name:'Roa'},   
+{_id:11, address:["44","Islington","A25 59F","London","UK"], contact:{email:'', emergency: '', phone:''}, dob:ISODate('1967-02-03T00:00:00.000Z'), employment_record:{position:'', start_date:'', end_date:'', salary:null}, first_name:'Ester', gender:'F',health_test:ISODate(''), last_name:'Choi'},   
+{_id:12, address:["982 Fulham","B80 JAF","London","UK"], contact:{email:'Bliss@msn.co.in', emergency: '987012489', phone:'880038421'}, dob:ISODate('1978-01-05T00:00:00.000Z'), employment_record:{position:'First Officer', start_date:'31998', end_date:'43497', salary:78000}, first_name:'Richard', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Bliss'},   
+{_id:13, address:["225","Central Street","103942","New York","USA"], contact:{email:'', emergency: '48978978', phone:'32985483'}, dob:ISODate(''), employment_record:{position:'First Officer', start_date:'05/21/1987', end_date:'47365', salary:206790}, first_name:'', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Stallion'},   
+{_id:14, address:["45A","Bel Air","12343","California","USA"], contact:{email:'Jkim88@outlook.com', emergency: '45804787605', phone:'48587563'}, dob:ISODate('1988-05-24T23:00:00.000Z'), employment_record:{position:'Captain', start_date:'35890', end_date:'44933', salary:85757}, first_name:'Khalid', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'JR'},   
+{_id:15, address:["6A","Downtown","124553","New York","USA"], contact:{email:'Khalid90@hotmail.com', emergency: '7897100489', phone:'91983741'}, dob:ISODate('1990-01-27T00:00:00.000Z'), employment_record:{position:'First Officer', start_date:'28373', end_date:'46117', salary:43453}, first_name:'Joyce', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Kim'},   
+{_id:16, address:["40","Wall Street","124553","New York","USA"], contact:{email:'Ali0O@msn.co.in', emergency: '165780744', phone:'12997472'}, dob:ISODate('1998-09-28T23:00:00.000Z'), employment_record:{position:'Captain', start_date:'32729', end_date:'45357', salary:334332}, first_name:'Ola', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Ali'},   
+{_id:17, address:["66","Paddington","SY13 3NQ","London","UK"], contact:{email:'PatrikJamnes@oulook.com', emergency: '549741396', phone:'998877339'}, dob:ISODate('1977-03-21T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'25417', end_date:'44987', salary:29398}, first_name:'Patrik', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'James'},   
+{_id:18, address:["56","Beverly Hills","444221","Los Angeles","USA"], contact:{email:'JessicaR67@msn.co.in', emergency: '47847561321', phone:'49957473'}, dob:ISODate('1989-08-27T23:00:00.000Z'), employment_record:{position:'First Officer', start_date:'30266', end_date:'46117', salary:100931}, first_name:'Jessica', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Robert'},   
+{_id:19, address:["34A","Bay Area","54532","San Francisco","USA"], contact:{email:'RowiSingh09@Outlook.com', emergency: '789411097', phone:'99877644'}, dob:ISODate('1990-12-11T00:00:00.000Z'), employment_record:{position:'Captain', start_date:'32459', end_date:'44750', salary:443322}, first_name:'Rowi', gender:'F',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Singh'},   
+{_id:20, address:["667","Newtown","67654","New York","USA"], contact:{email:'DwayneJ@msn.co.in', emergency: '7881231879', phone:'99597574'}, dob:ISODate('1992-12-14T00:00:00.000Z'), employment_record:{position:'Captain', start_date:'33604', end_date:'46756', salary:99324}, first_name:'Dwayne', gender:'M',health_test:ISODate('2021-12-14T00:00:00.000Z'), last_name:'Julia'}]); 
+
+db.flights.insertMany([
+{_id:1, arrival_airport:2, arrival_datetime:ISODate('2021-12-15T16:30:00.000Z'), departure_airport:1, departure_datetime:ISODate('2021-12-15T04:30:00.000Z'), pilot_id:2, copilot_id:5, flight_distance:183, plane_id:2},
+{_id:2, arrival_airport:9, arrival_datetime:ISODate('2021-12-16T00:00:00.000Z'), departure_airport:2, departure_datetime:ISODate('2021-12-15T12:00:00.000Z'), pilot_id:3, copilot_id:7, flight_distance:2091, plane_id:7},
+{_id:3, arrival_airport:4, arrival_datetime:ISODate('2021-12-16T01:55:00.000Z'), departure_airport:3, departure_datetime:ISODate('2021-12-15T13:55:00.000Z'), pilot_id:19, copilot_id:9, flight_distance:3500, plane_id:20},
+{_id:4, arrival_airport:7, arrival_datetime:ISODate('2021-12-17T02:20:00.000Z'), departure_airport:4, departure_datetime:ISODate('2021-12-17T14:20:00.000Z'), pilot_id:20, copilot_id:12, flight_distance:1100, plane_id:9},
+{_id:5, arrival_airport:6, arrival_datetime:ISODate('2021-12-20T18:25:00.000Z'), departure_airport:5, departure_datetime:ISODate('2021-12-20T06:25:00.000Z'), pilot_id:11, copilot_id:13, flight_distance:76, plane_id:10},
+{_id:6, arrival_airport:8, arrival_datetime:ISODate('2021-12-21T00:20:00.000Z'), departure_airport:15, departure_datetime:ISODate('2021-12-21T12:20:00.000Z'), pilot_id:14, copilot_id:15, flight_distance:1312, plane_id:12},
+{_id:7, arrival_airport:7, arrival_datetime:ISODate('2021-12-21T04:15:00.000Z'), departure_airport:8, departure_datetime:ISODate('2021-12-21T16:15:00.000Z'), pilot_id:8, copilot_id:18, flight_distance:1263, plane_id:15},
+{_id:8, arrival_airport:12, arrival_datetime:ISODate('2021-12-23T06:00:00.000Z'), departure_airport:13, departure_datetime:ISODate('2021-12-23T18:00:00.000Z'), pilot_id:3, copilot_id:5, flight_distance:1934, plane_id:16},
+{_id:9, arrival_airport:8, arrival_datetime:ISODate('2021-12-24T15:30:00.000Z'), departure_airport:14, departure_datetime:ISODate('2021-12-24T03:30:00.000Z'), pilot_id:19, copilot_id:9, flight_distance:4987, plane_id:19},
+{_id:10, arrival_airport:4, arrival_datetime:ISODate('2021-12-25T16:20:00.000Z'), departure_airport:11, departure_datetime:ISODate('2021-12-25T04:20:00.000Z'), pilot_id:2, copilot_id:12, flight_distance:3675, plane_id:2},
+{_id:11, arrival_airport:2, arrival_datetime:ISODate('2021-12-26T04:30:00.000Z'), departure_airport:7, departure_datetime:ISODate('2021-12-26T16:30:00.000Z'), pilot_id:11, copilot_id:13, flight_distance:3234, plane_id:20},
+{_id:12, arrival_airport:9, arrival_datetime:ISODate('2021-12-28T03:00:00.000Z'), departure_airport:10, departure_datetime:ISODate('2021-12-28T15:00:00.000Z'), pilot_id:20, copilot_id:15, flight_distance:1384, plane_id:5},
+{_id:13, arrival_airport:3, arrival_datetime:ISODate(''), departure_airport:12, departure_datetime:ISODate(''), pilot_id:14, copilot_id:18, flight_distance:null, plane_id:null},
+{_id:14, arrival_airport:11, arrival_datetime:ISODate('2021-12-31T08:20:00.000Z'), departure_airport:null, departure_datetime:ISODate('2021-12-30T20:20:00.000Z'), pilot_id:null, copilot_id:7, flight_distance:1432, plane_id:10},
+{_id:15, arrival_airport:12, arrival_datetime:ISODate('2021-01-02T00:00:00.000Z'), departure_airport:300, departure_datetime:ISODate('2021-01-01T00:00:00.000Z'), pilot_id:19, copilot_id:null, flight_distance:1934, plane_id:2},
+{_id:20, arrival_airport:17, arrival_datetime:ISODate('2021-12-25T16:20:00.000Z'), departure_airport:16, departure_datetime:ISODate('2021-12-25T04:20:00.000Z'), pilot_id:2, copilot_id:12, flight_distance:15000, plane_id:2}]);
+
+db.planes.insertMany([
+{_id:1, flying_range:15843, length_of_service:7, maker:'Boeing', model:'777', seating_capacity:308, status:'Upgrade'},
+{_id:2, flying_range:6150, length_of_service:6, maker:'Airbus', model:'A320', seating_capacity:155, status:'Working'},
+{_id:3, flying_range:7009, length_of_service:7, maker:'AE Systems', model:'3007C', seating_capacity:176, status:'Working'},
+{_id:4, flying_range:5673, length_of_service:5, maker:'RR Holding', model:'3007C', seating_capacity:182, status:'Upgrade'},
+{_id:5, flying_range:8853, length_of_service:4, maker:'GE Aviation', model:'GGRR', seating_capacity:155, status:'Repaired'},
+{_id:6, flying_range:8763, length_of_service:6, maker:'United', model:'787', seating_capacity:210, status:'Upgrade'},
+{_id:7, flying_range:0, length_of_service:7, maker:'AE Systems', model:'3007C', seating_capacity:0, status:'Repaired'},
+{_id:8, flying_range:15200, length_of_service:9, maker:'Airbus', model:'A380', seating_capacity:320, status:'Working'},
+{_id:9, flying_range:1000, length_of_service:8, maker:'Boeing', model:'787', seating_capacity:600, status:'Working'},
+{_id:10, flying_range:7643, length_of_service:6, maker:'GE Aviation', model:'GGRR', seating_capacity:190, status:'Working'},
+{_id:11, flying_range:7009, length_of_service:8, maker:'RR Holding', model:'3009A', seating_capacity:176, status:'Upgrade'},
+{_id:12, flying_range:7654, length_of_service:9, maker:'GE Aviation', model:'3004F', seating_capacity:180, status:'Working'},
+{_id:13, flying_range:4567, length_of_service:10, maker:'Boeing', model:'737', seating_capacity:155, status:'Repaired'},
+{_id:14, flying_range:7009, length_of_service:9, maker:'RR Holding', model:'3007C', seating_capacity:155, status:'Upgrade'},
+{_id:15, flying_range:8756, length_of_service:8, maker:'United', model:'767', seating_capacity:178, status:'Working'},
+{_id:16, flying_range:7877, length_of_service:8, maker:'United', model:'757', seating_capacity:180, status:'Working'},
+{_id:17, flying_range:7876, length_of_service:9, maker:'AE Systems', model:'319', seating_capacity:189, status:'Upgrade'},
+{_id:18, flying_range:4563, length_of_service:9, maker:'United', model:'CRJ', seating_capacity:190, status:'Upgrade'},
+{_id:19, flying_range:12300, length_of_service:9, maker:'Boeing', model:'777', seating_capacity:220, status:'Working'},
+{_id:20, flying_range:15200, length_of_service:8, maker:'Airbus', model:'A380', seating_capacity:320, status:'Upgrade'}]);

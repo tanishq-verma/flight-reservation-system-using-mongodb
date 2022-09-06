@@ -1,0 +1,60 @@
+use('airline_group_22');
+
+db.bookings.aggregate([
+{
+   $match:{ passportNo :123415 }
+},  
+{
+   $lookup:
+     {
+       from: "flights",
+       localField: "journey",
+       foreignField: "_id",
+       as: "flights"
+     }
+  },
+  {
+  $lookup:
+     {
+       from: "airports",
+       localField: "flights.departure_airport",
+       foreignField: "_id",
+       as: "departure_airport"
+     }
+  },
+  {
+  $lookup:
+     {
+       from: "airports",
+       localField: "flights.arrival_airport",
+       foreignField: "_id",
+       as: "arrival_airport"
+     }
+  },
+  {   
+   $lookup:
+     {
+       from: "planes",
+       localField: "flights.plane_id",
+       foreignField: "_id",
+       as: "planes"
+     }
+  },
+  {
+   $project:{
+       passportNo:1,
+       booking_datetime:1,
+       fullname:1,
+       total_cost:1,
+       Flight_Stops:{$size:"$journey"},
+       "flights.departure_datetime":1,
+       "flights.arrival_datetime":1,
+       "departure_airport.name":1,
+       "departure_airport.city":1,
+       "arrival_airport.name":1,
+       "arrival_airport.city":1,
+       "planes.maker":1,
+       "planes.model":1,
+   }
+  }
+]);

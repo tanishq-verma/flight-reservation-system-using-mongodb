@@ -1,0 +1,26 @@
+
+use('airline_group_22');
+
+// get most expensive airport by country
+db.airports.aggregate([
+   {
+       $sort:
+           {
+               hourly_rate: -1
+           }
+   },
+   {
+       $group:
+           {
+               _id: "$country",
+               highestCharge:
+           {
+               $max: "$hourly_rate"
+           },
+               airport:
+                   {
+                       $first: "$name"
+                   }
+           }
+   },
+]);

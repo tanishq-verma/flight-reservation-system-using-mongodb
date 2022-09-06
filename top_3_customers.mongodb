@@ -1,0 +1,29 @@
+use('airline_group_22');
+
+db.bookings.aggregate([
+ {
+   $project: {
+       booking_datetime: 0,
+       journey: 0,
+   }
+ },
+ {
+   $group:{
+   _id:"$passportNo",
+   Passenger:{$first:"$fullname"},
+   total_expense:{$sum:"$total_cost"}
+   }
+ },
+ {
+ $addFields: { Passport: "$_id" }
+ },
+ {
+ $project: { _id: 0 }
+ },
+ {
+   $sort: {total_expense: -1}
+ },
+ {
+   $limit: 3
+ }
+]);

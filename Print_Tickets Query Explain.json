@@ -1,0 +1,214 @@
+{
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "plannerVersion": 1,
+          "namespace": "61a74a7bfeff5c1230154fde_ecs789p.bookings",
+          "indexFilterSet": false,
+          "parsedQuery": {
+            "passportNo": {
+              "$eq": 123415
+            }
+          },
+          "queryHash": "C1CDFEEE",
+          "planCacheKey": "C1CDFEEE",
+          "winningPlan": {
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "_id": 1,
+              "arrival_airport.city": 1,
+              "arrival_airport.name": 1,
+              "booking_datetime": 1,
+              "departure_airport.city": 1,
+              "departure_airport.name": 1,
+              "flights.arrival_airport": 1,
+              "flights.arrival_datetime": 1,
+              "flights.departure_airport": 1,
+              "flights.departure_datetime": 1,
+              "flights.plane_id": 1,
+              "fullname": 1,
+              "journey": 1,
+              "passportNo": 1,
+              "planes.maker": 1,
+              "planes.model": 1,
+              "total_cost": 1
+            },
+            "inputStage": {
+              "stage": "COLLSCAN",
+              "filter": {
+                "passportNo": {
+                  "$eq": 123415
+                }
+              },
+              "direction": "forward"
+            }
+          },
+          "rejectedPlans": []
+        },
+        "executionStats": {
+          "executionSuccess": true,
+          "nReturned": 1,
+          "executionTimeMillis": 1,
+          "totalKeysExamined": 0,
+          "totalDocsExamined": 15,
+          "executionStages": {
+            "stage": "PROJECTION_DEFAULT",
+            "nReturned": 1,
+            "executionTimeMillisEstimate": 0,
+            "works": 17,
+            "advanced": 1,
+            "needTime": 15,
+            "needYield": 0,
+            "saveState": 1,
+            "restoreState": 1,
+            "isEOF": 1,
+            "transformBy": {
+              "_id": 1,
+              "arrival_airport.city": 1,
+              "arrival_airport.name": 1,
+              "booking_datetime": 1,
+              "departure_airport.city": 1,
+              "departure_airport.name": 1,
+              "flights.arrival_airport": 1,
+              "flights.arrival_datetime": 1,
+              "flights.departure_airport": 1,
+              "flights.departure_datetime": 1,
+              "flights.plane_id": 1,
+              "fullname": 1,
+              "journey": 1,
+              "passportNo": 1,
+              "planes.maker": 1,
+              "planes.model": 1,
+              "total_cost": 1
+            },
+            "inputStage": {
+              "stage": "COLLSCAN",
+              "filter": {
+                "passportNo": {
+                  "$eq": 123415
+                }
+              },
+              "nReturned": 1,
+              "executionTimeMillisEstimate": 0,
+              "works": 17,
+              "advanced": 1,
+              "needTime": 15,
+              "needYield": 0,
+              "saveState": 1,
+              "restoreState": 1,
+              "isEOF": 1,
+              "direction": "forward",
+              "docsExamined": 15
+            }
+          },
+          "allPlansExecution": []
+        }
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    },
+    {
+      "$lookup": {
+        "from": "flights",
+        "as": "flights",
+        "localField": "journey",
+        "foreignField": "_id"
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    },
+    {
+      "$lookup": {
+        "from": "airports",
+        "as": "departure_airport",
+        "localField": "flights.departure_airport",
+        "foreignField": "_id"
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    },
+    {
+      "$lookup": {
+        "from": "airports",
+        "as": "arrival_airport",
+        "localField": "flights.arrival_airport",
+        "foreignField": "_id"
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    },
+    {
+      "$lookup": {
+        "from": "planes",
+        "as": "planes",
+        "localField": "flights.plane_id",
+        "foreignField": "_id"
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    },
+    {
+      "$project": {
+        "_id": true,
+        "total_cost": true,
+        "passportNo": true,
+        "booking_datetime": true,
+        "fullname": true,
+        "Flight_Stops": {
+          "$size": [
+            "$journey"
+          ]
+        },
+        "flights": {
+          "arrival_datetime": true,
+          "departure_datetime": true
+        },
+        "departure_airport": {
+          "city": true,
+          "name": true
+        },
+        "arrival_airport": {
+          "city": true,
+          "name": true
+        },
+        "planes": {
+          "maker": true,
+          "model": true
+        }
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0
+    }
+  ],
+  "serverInfo": {
+    "host": "bigboii-shard-00-02.2n7cn.mongodb.net",
+    "port": 27017,
+    "version": "4.4.10",
+    "gitVersion": "58971da1ef93435a9f62bf4708a81713def6e88c"
+  },
+  "ok": 1,
+  "$clusterTime": {
+    "clusterTime": {
+      "$timestamp": {
+        "t": 1640209405,
+        "i": 1
+      }
+    },
+    "signature": {
+      "hash": {
+        "$binary": {
+          "base64": "2bPxWVe8AD6vgV7sRl89MYFhEQY=",
+          "subType": "00"
+        }
+      },
+      "keyId": 6978182113413562000
+    }
+  },
+  "operationTime": {
+    "$timestamp": {
+      "t": 1640209405,
+      "i": 1
+    }
+  }
+}

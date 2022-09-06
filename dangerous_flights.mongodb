@@ -1,0 +1,40 @@
+// Select the database to use.
+use('airline_group_22');
+
+db.flights.aggregate(
+  // Join planes to get flying_range
+  {$sort:{flight_distance:-1}},
+     {$lookup:
+       {from: "planes", 
+        localField: "plane_id",
+        foreignField: "_id",
+        as: "plane_specs"
+       }},
+  // Unwind plane document
+   {$unwind: '$plane_specs'},
+   // Filter for flight_distance > planes.flying_range
+    {$match:{$expr:{$gt:["$flight_distance", "$plane_specs.flying_range"]}}},
+      // Join airports to get departure airport name
+      {$lookup:
+       {from: "airports", 
+        localField: "departure_airport",
+        foreignField: "_id",
+        as: "departure"
+       }},
+       // Join airports to get arrival airport name
+        {$lookup:
+       {from: "airports", 
+        localField: "arrival_airport",
+        foreignField: "_id",
+        as: "arrival"
+       }},
+       {$unwind: '$departure'},
+        {$unwind: '$arrival'},
+       {$project:{
+         "_id": 1,
+         "departure": "$departure.city",
+         "arrival": "$arrival.city",
+         "distance": "$flight_distance",
+         "plane_flying_range": "$plane_specs.flying_range"
+       }}
+    )

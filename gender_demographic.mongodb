@@ -1,0 +1,3 @@
+use('airline_group_22');
+
+db.employees.find({gender: "M"}).count() > db.employees.find({gender: "F"}) ? "More Females Employees" : "More Male Employees";

@@ -1,0 +1,26 @@
+use('airline_group_22');
+
+db.employees.aggregate(
+   {
+   $lookup:
+               {
+                   from:"flights",
+                   localField:"_id",
+                   foreignField:"pilot_id",
+                   as:"flights"
+               }
+},
+{
+   $project:{
+           _id:1,
+           first_name:"$first_name",
+           last_name:"$last_name",
+           email:"$contact.email",
+           no_of_flights:{$size:"$flights"},
+           total_distance:{$sum:"$flights.flight_distance"}
+ 
+       }
+},
+{ $sort : { total_distance : -1 } },
+{ $limit : 1 }
+);

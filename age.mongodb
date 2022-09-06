@@ -1,0 +1,42 @@
+use('airline_group_22');
+
+// If no dob will return an age of 0
+db.employees.aggregate([
+   {
+       $match: {
+           $or:
+               [
+                   {    
+                       "employment_record.position": "Captain"           
+                   },
+                   {
+                       "employment_record.position": "First Officer"
+                   }
+               ]
+       }
+   },
+   {
+       $sort:
+           {
+               last_name: -1
+           }
+   },
+   {
+       $project:
+           {
+               _id: "$_id",
+               name: "$last_name",
+               age:
+                   {
+                       $dateDiff:
+                           {
+                               startDate: "$dob",
+                               endDate: "$$NOW",
+                               unit: "year"
+                           }
+                   },
+               position: "$employment_record.position"
+           }
+   }
+]);
+

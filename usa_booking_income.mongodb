@@ -1,0 +1,32 @@
+use('airline_group_22');
+
+db.airports.aggregate([
+   { $match: { country : "USA" }
+   },
+   {
+       $lookup:
+      {
+        from: "flights",
+        localField: "_id",
+        foreignField: "arrival_airport",
+        as: "flights_docs"
+      }
+   },
+   {    
+    $lookup:
+      {
+        from: "bookings",
+        localField: "flights_docs._id",
+        foreignField: "journey",
+        as: "booking_docs"
+      }
+   },    
+   {    $unwind: "$booking_docs"
+   },
+   {
+       $group: {
+               _id: "$name",
+               moneySpent: {$sum: "$booking_docs.total_cost"}
+       }
+   }
+])
